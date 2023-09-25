@@ -7,11 +7,14 @@ products = [
     {"id": 3, "name": "beef", "price": 8.00, "quantity": 9}
 ]
 
+@app.route('', methods=['GET'])
+def home():
+    return print("Welcome to Carl Mart, Where shopping is a pleasure)
+                 
 @app.route('/products', methods=['GET'])
 def get_products():
     return jsonify({"products": products})
     
-
 @app.route('/products/<int:product_id>', methods=['GET'])
 def get_product(product_id):
     product = next((product for product in products if product["id"] == product_id), None)
@@ -47,4 +50,4 @@ def add_quantity(product_id):
         return jsonify({"message": "Product put back"}) 
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(debug=True)
