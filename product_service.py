@@ -47,4 +47,4 @@ def add_quantity(product_id):
         return jsonify({"message": "Product put back"}) 
 
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(port=1000, debug=True)
