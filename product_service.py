@@ -7,15 +7,14 @@ products = [
     {"id": 3, "name": "beef", "price": 8.00, "quantity": 9}
 ]
 
-@app.route('', methods=['GET'])
-def home():
-    return print("Welcome to Carl Mart, Where shopping is a pleasure)
-                 
-@app.route('/products', methods=['GET'])
+
+BASE_URL = "https://carl-mart.onrender.com"
+
+@app.route(f'{BASE_URL}/products', methods=['GET'])
 def get_products():
     return jsonify({"products": products})
     
-@app.route('/products/<int:product_id>', methods=['GET'])
+@app.route(f'{BASE_URL}/products/<int:product_id>', methods=['GET'])
 def get_product(product_id):
     product = next((product for product in products if product["id"] == product_id), None)
     if product:
@@ -24,7 +23,7 @@ def get_product(product_id):
     else:
         return jsonify({"error": "Product not found"}), 404
 
-@app.route('/products', methods=['POST'])
+@app.route(f'{BASE_URL}/products', methods=['POST'])
 def add_products():
     new_product = {
         "id": len(products) + 1,
@@ -35,14 +34,14 @@ def add_products():
     products.append(new_product)
     return jsonify({"message": "Product added", "product": new_product}), 201
 
-@app.route('/remove/<int:product_id>', methods=['POST'])
+@app.route(f'{BASE_URL}/remove/<int:product_id>', methods=['POST'])
 def remove_quantity(product_id):
     product = next((product for product in products if product["id"] == product_id), None)
     if product:
         products[product_id-1]['quantity'] -= 1
         return jsonify({"message": "Product added to cart"})
 
-@app.route('/add/<int:product_id>', methods=['POST'])
+@app.route(f'{BASE_URL}/add/<int:product_id>', methods=['POST'])
 def add_quantity(product_id):
     product = next((product for product in products if product["id"] == product_id), None)
     if product:
